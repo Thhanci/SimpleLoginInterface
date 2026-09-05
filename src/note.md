@@ -2,6 +2,10 @@
 
 
 
+【Vue3+Vite+Element-Plus实战商城后台管理系统】https://www.bilibili.com/video/BV13f1zBLEo6?p=65&vd_source=3424baa0ba17a6687e097f58c68731c5
+
+
+
 
 
 ```text
