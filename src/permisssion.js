@@ -14,7 +14,7 @@ router.beforeEach(async (to,from,next)=>{
 
     // console.log("全局前置守卫")
     
-    // console.log("to",to,"from",from)
+    console.log("to ",to,"from",from,"next",next)
 
     const token = getToken()
 
@@ -38,7 +38,7 @@ router.beforeEach(async (to,from,next)=>{
 
     //设置页面标题
     // console.log(to.meta.title)
-    let title =(to.meta.title?to.meta.title:"")+"-帝莎编程商城后台"
+    let title =(to.meta.title?to.meta.title:"")+"-demo"
     document.title=title
 
 

@@ -402,3 +402,4 @@ none → 隐藏
 </html>
 ```
 
+**`box-sizing: border-box;` 是 CSS 中用来控制元素“宽高计算方式”的属性。设置后，元素的 `width` 和 `height` 会包含 `padding`（内边距）和 `border`（边框），让布局更容易控制。**
