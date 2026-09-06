@@ -30,7 +30,7 @@
 
             <el-dropdown class="dropdown" @command="handleCommand">
                 <span class="flex items-center text-light-50">
-                    <el-avatar class="mr-2" :size="25" :src="$store.state.user.avatar" />
+                <el-avatar class="mr-2" :size="25" :src="avatarImg" />
                     {{ $store.state.user.username }}
                     <el-icon class="el-icon--right">
                         <arrow-down />
@@ -43,6 +43,8 @@
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
+
+            <!-- <img src="../../assets/images/image02.jpg" style="width: 50px; height: 50px; border-radius: 50%;" /> -->
 
         </div>
 
@@ -80,6 +82,8 @@
 </template>
 
 <script setup>
+
+import avatarImg from '../../assets/images/image02.jpg'
 
 import { ref, reactive } from 'vue'
 import { logout,updatepassword } from '~/api/manager';
