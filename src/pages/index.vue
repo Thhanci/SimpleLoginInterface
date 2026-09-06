@@ -1,8 +1,8 @@
 <template>
     <div>
-        后台首页
+        <!-- 后台首页 -->
 
-        {{ $store.state.user.username }}
+        <!-- {{ $store.state.user.username }} -->
 
 
 
