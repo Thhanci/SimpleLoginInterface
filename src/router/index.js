@@ -4,19 +4,19 @@ import {
     createWebHashHistory
 }from 'vue-router'
 
-
+import Admin from '~/layouts/admin.vue'
 import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue'
 import NotFound from '~/pages/404.vue'
 
 const routes = [{
-
-    path:"/",
-    component:Index,
-    meta:{
-        title:"后台首页"
-    }
-
+    path: "/",               // ← 根路径（后台首页）
+    component: Admin,        // ← 先加载布局（admin.vue）
+    children: [{
+        path: "/",             // ← 子路由根路径
+        component: Index,      // ← 再加载首页内容（index.vue）
+        meta: { title: "后台首页" }
+    }]
 },{
     path:"/login",
     component:Login,

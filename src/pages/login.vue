@@ -23,7 +23,7 @@
                 </el-form-item>
 
                 <el-form-item class="submit"  style="display: block; text-align: center;">
-                    <button  @click="onSubmit" :disabled="loading">
+                    <button  class="button"  @click="onSubmit" :disabled="loading">
                         <span v-if="loading">登录中...</span>
                         <span v-else>Login</span>
                     </button>
