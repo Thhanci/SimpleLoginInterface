@@ -403,3 +403,211 @@ none → 隐藏
 ```
 
 **`box-sizing: border-box;` 是 CSS 中用来控制元素“宽高计算方式”的属性。设置后，元素的 `width` 和 `height` 会包含 `padding`（内边距）和 `border`（边框），让布局更容易控制。**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```text
+.f-menu::-webkit-scrollbar {
+    width: 0px;
+}
+```
+
+| 写法 | 名称                     | 作用                   | 示例                                                         |
+| :--- | :----------------------- | :--------------------- | :----------------------------------------------------------- |
+| `:`  | 伪类（Pseudo-class）     | 选中元素的**特定状态** | `:hover`（悬停）、`:focus`（焦点）、`:first-child`（第一个子元素） |
+| `::` | 伪元素（Pseudo-element） | 选中元素的**特定部分** | `::before`（内容前）、`::after`（内容后）、`::-webkit-scrollbar`（滚动条） |
+
+
+
+**`z-index: 100` 是 CSS 中用来控制元素“上下堆叠顺序”的属性，值越大，元素显示在越上面。**
+
+
+
+
+
+
+
+
+
+
+
+![QQ_1788686816999](./note.assets/QQ_1788686816999-1788696140395-2.png)
+
+```javascript
+消除白线  #app的样式改了就行
+白线来自npm create vite@latest my-app --template vue
+E:\front-end\vueVite\SimpleLoginInterface\src\style.css
+在main.js里 // import './style.css'   // ← 注释掉这行
+html, body, #app {
+    width: 100%;           /* 宽度撑满 */
+    min-height: 100vh;     /* 高度至少占满视口 */
+    margin: 0;             /* 去掉 body 默认边距 */
+    padding: 0;            /* 去掉任何默认内边距 */
+}
+
+
+白线来源：
+1. body 默认 margin: 8px（产生四周空白）
+2. #app 没有高度，底部没有填满（露出 body 背景）
+
+你的修复：
+html, body, #app { min-height: 100vh; margin: 0; padding: 0; }
+→ 白线消失 ✅
+```
+
+默认情况下，堆叠顺序是：
+
+1. 元素背景（最底层）
+2. `::before`
+3. 元素内容
+4. `::after`（最顶层）
+
+所以 `::after` 默认会在 `::before` **上面**。
+
+
+
+
+
+```text
+.box .left::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../assets/images/login.jpg);
+    background-size: cover;
+    opacity: 0.8;
+}
+
+
+background-size:
+值	效果	是否裁剪
+cover	图片铺满整个容器	✅ 可能会裁剪
+contain	图片完整显示在容器内	❌ 不裁剪，但可能有留白
+100% 100%	图片拉伸填满	✅ 可能变形
+```
+
+| 写法                                         | 含义                                 | 适用场景     |
+| :------------------------------------------- | :----------------------------------- | :----------- |
+| `(max-width: 768px)`                         | 屏幕宽度 **≤ 768px** 时生效          | 手机、小平板 |
+| `(min-width: 768px)`                         | 屏幕宽度 **≥ 768px** 时生效          | 平板、桌面   |
+| `(min-width: 768px) and (max-width: 1024px)` | 屏幕宽度在 **768~1024px** 之间时生效 | 平板         |
+| `(orientation: portrait)`                    | **竖屏**时生效                       | 手机竖屏     |
+| `(orientation: landscape)`                   | **横屏**时生效                       | 手机横屏     |
+| `(prefers-color-scheme: dark)`               | 系统**深色模式**时生效               | 暗色主题     |
+| `(prefers-color-scheme: light)`              | 系统**浅色模式**时生效               | 亮色主题     |
+| `print`                                      | **打印**时生效                       | 打印样式     |
+| `screen`                                     | **屏幕**显示时生效                   | 普通网页     |
+
+**768px 不是一个“算出来的”数学值，而是业界约定俗成的“断点”（Breakpoint）。**
+
+| 断点     | 名称            | 代表设备              |
+| :------- | :-------------- | :-------------------- |
+| ≤ 480px  | 手机小屏        | 小屏手机              |
+| ≤ 768px  | **手机/小平板** | **iPhone、iPad mini** |
+| ≤ 1024px | 平板            | iPad、小笔记本        |
+| ≤ 1200px | 笔记本          | 普通笔记本            |
+| > 1200px | 大屏桌面        | 台式机、大屏显示器    |
+
+```
+background-position: 水平位置 垂直位置;
+left 是 left center 的简写，两者都表示“水平靠左 + 垂直居中”。
+```
+
+| 写法          | 水平                  | 垂直             | 效果                              |
+| :------------ | :-------------------- | :--------------- | :-------------------------------- |
+| `left`        | `left`（默认 center） | 居中             | 靠左 + 垂直居中                   |
+| `left center` | `left`                | `center`         | 靠左 + 垂直居中（和 `left` 一样） |
+| `left top`    | `left`                | `top`            | 左上角                            |
+| `center`      | `center`（默认）      | `center`（默认） | 居中                              |
+| `center top`  | `center`              | `top`            | 水平居中 + 靠上                   |
+
+
+
+
+
+```text
+.box .left::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/image01.jpg);
+    background-size: cover;
+    background-position:left center;
+    opacity: 0.8;
+}
+```
+
+
+
+css  `background-size` 用于控制背景图片的大小。
+
+| 值             | 含义                                              | 效果             |
+| :------------- | :------------------------------------------------ | :--------------- |
+| `cover`        | 图片**放大/缩小**到完全覆盖容器，可能**裁剪**     | 铺满，不留白     |
+| `contain`      | 图片**放大/缩小**到完整显示在容器内，可能**留白** | 完整显示，不裁剪 |
+| `100% 100%`    | 图片拉伸到容器大小                                | 可能**变形**     |
+| `100px 200px`  | 固定宽高                                          | 精确控制         |
+| `50% 50%`      | 相对于容器的百分比                                | 响应式           |
+| `auto`（默认） | 保持图片原始尺寸                                  | 可能溢出或留白   |
+
+
+
+## 浏览器检查：查看页面元素对应的 CSS
+
+### 方法 1：用选择箭头点击元素（最常用 ✅）
+
+1. 按 `F12` 打开开发者工具
+2. 点击左上角的 **选择箭头** 图标（或按 `Ctrl + Shift + C`）
+3. 在页面上**点击**你想查看的元素
+4. 右侧 **Styles** 面板会显示该元素的所有 CSS 样式
+
+
+
+
+
+
+
+### 所有 `justify-content` 值对比
+
+| 值                   | 效果                   | 示意              |
+| :------------------- | :--------------------- | :---------------- |
+| `flex-start`（默认） | 靠左排列               | `[A][B][C]____`   |
+| `flex-end`           | 靠右排列               | `____[A][B][C]`   |
+| `center`             | 居中排列               | `__[A][B][C]__`   |
+| `space-between`      | **两端对齐，中间平分** | `[A]___[B]___[C]` |
+| `space-around`       | 每个元素两侧间距相等   | `_[A]_[B]_[C]_`   |
+| `space-evenly`       | 所有间距完全相等       | `_[A]__[B]__[C]_` |
+
+| 情况               | 说明                               | 解决方法                |
+| :----------------- | :--------------------------------- | :---------------------- |
+| **内容溢出**       | 文字太长，超出盒子                 | `overflow: hidden` 裁剪 |
+| **定位溢出**       | `position: absolute` 偏移出盒子    | 调整 `top/left` 值      |
+| **transform 溢出** | `transform: translateX()` 移出盒子 | 调整百分比或删除        |
+| **margin 溢出**    | 负 `margin` 把元素拉出盒子         | 调整 `margin` 值        |
+
+| 方法           | 代码                         | 效果                   |
+| :------------- | :--------------------------- | :--------------------- |
+| **隐藏溢出**   | `overflow: hidden;`          | 裁掉超出的部分         |
+| **显示滚动条** | `overflow: auto;`            | 超出的部分通过滚动查看 |
+| **允许溢出**   | `overflow: visible;`（默认） | 内容直接显示在外面     |
+| **文字换行**   | `word-wrap: break-word;`     | 文字自动换行           |

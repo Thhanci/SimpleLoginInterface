@@ -5,6 +5,7 @@
         <div class="right">
             <h4>登录</h4>
             <el-form :model="form" :rules="rules" ref="formRef">
+
                 <el-form-item class="acc" prop="username">
                     <el-input v-model="form.username" placeholder="用户名">
                         <template #prefix>
@@ -12,6 +13,7 @@
                         </template>
                     </el-input>
                 </el-form-item>
+
                 <el-form-item class="acc" prop="password">
                     <el-input v-model="form.password" type="password" placeholder="密码">
                         <template #prefix>
@@ -19,10 +21,20 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-button class="submit" round type="primary" @click="onSubmit" :loading="loading">Login</el-button>
+
+                <el-form-item class="submit"  style="display: block; text-align: center;">
+                    <button  @click="onSubmit" :disabled="loading">
+                        <span v-if="loading">登录中...</span>
+                        <span v-else>Login</span>
+                    </button>
                 </el-form-item>
+
             </el-form>
+
+            
+
+
+
             <div class="fn">
                 <el-button type="text" @click="router.push('/register')">注册账号</el-button>
                 <el-button type="text" @click="router.push('/forget')">找回密码</el-button>

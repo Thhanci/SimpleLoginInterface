@@ -17,21 +17,161 @@ html::before{
     background: linear-gradient(120deg, #51ff77 0%, #2ed8f2 100%);
 }
 
+::selection {
+    color: #fff;
+    background-color: rgb(144, 129, 241);
+}
+
 
 .box{
     display: flex;
     overflow: hidden;
-    width: 90rem;
-    height: 55rem;
+    width: 90vw;           /* 宽度占视口宽度的 90% */
+    max-width: 1200px;     /* 限制最大宽度，防止太宽 */
+    height: 80vh;          /* 高度占视口高度的 80% */
+    max-height: 700px;     /* 限制最大高度，防止太高 */
+    min-height: 400px;     /* 限制最小高度，防止太小 */
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 1.5rem;
+    /* border-radius: 0; */
     margin:10% auto;
     box-shadow: 0 0 1rem 0.3rem rgb(0 0 0 /10%);
 }
 
 .box .left{
     position: relative;
+    flex-shrink: 0; 
+    /* background-color: #0b0808; */
     width: 35%;
     height: 100%;
+    background-color: skyblue;
 }
 
+.box .left::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #000; */
+    background-image: url(../images/image01.jpg);
+    background-size: 100% 100%;
+    background-position:left center;
+    opacity: 0.8;
+}
+
+.box .right{
+    display:flex;
+    width: 65%;
+    height: 100%;              /* ← 加上这行，撑满高度 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;   /* ← 加上这行，垂直居中 */
+}
+
+/*  @media 窄屏适配 */
+@media (max-width: 768px) {
+    .box .left {
+        display: none;         /* ← 窄屏时隐藏左侧图片 */
+    }
+    .box .right {
+        width: 100%;           /* ← 右侧占满 */
+        padding: 20px 30px;
+    }
+}
+
+.box .right h4{
+    color: rgb(144, 129, 241);
+    font-size:3rem;
+    margin-bottom: 5rem;
+}
+
+.box .right form{
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+    width: 100%;
+}
+
+.box .right form .acc{
+    outline: none;
+    width: 80%;
+    height:5rem;
+    font-size: 1.6rem;
+    margin-top: 0rem;
+    padding:1rem 0 0 1.6rem;
+    border: none;
+    border-bottom: 1px solid rgb(144, 129, 241);
+    color:rgb(144 , 129, 241);
+    background-color: rgba(0,0,0,0);
+}
+
+.box .right form .acc:focus{
+    outline: none;
+    color:rgb(144, 129, 241);
+    padding:1rem 0 0 1.6rem;
+}
+
+
+
+
+
+.box .right .submit {
+    display: block;           /* 块级元素，独占一行 */
+    width: 50%;
+    max-width: 300px;
+    height: 3rem;
+    color: #f6f6f6;
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+    font-size: 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin: 2rem auto 0;      /* 左右自动居中 */
+    cursor: pointer;
+    transform: translateX(-20%);
+}
+
+.box .right .submit:hover {
+    box-shadow: 0 0 2rem -0.5rem rgb(0 0 0 / 15%);
+}
+
+.box .right .fn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    width: 70%;
+}
+
+.box .right .fn button  {
+    font-size: 1.3rem;
+    margin-top: 5rem;
+    padding: 1rem 2rem;
+    color: #666;
+}
+
+.box .right .fn button :hover {
+    color: rgb(144,129,241);
+}
+
+
+
+
+
+
+
+/* .box .left::before{
+    content: '                          321321';
+    position: absolute;
+    white-space: pre;
+    inset: 0; 
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+
+}
+.box .left::after{
+    content: '123';
+    position: absolute;
+    inset: 0; 
+} */
