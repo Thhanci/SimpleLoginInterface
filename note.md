@@ -1019,3 +1019,24 @@ $('#box')
 // 每个方法都返回 jQuery 对象，可以继续调用
 ```
 
+
+
+
+
+
+
+```javascript
+const arr = [1, 2, 3, 4, 5]
+
+// filter 遍历数组，把每个元素传给回调函数
+arr.filter((item) => {
+  // ↑ 这个 item 是 filter 自动传的
+  // 第1次循环：item = 1
+  // 第2次循环：item = 2
+  // 第3次循环：item = 3
+  // ...
+  return item > 2
+})
+// 结果：[3, 4, 5]
+```
+
