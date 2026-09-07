@@ -4,7 +4,7 @@
         <el-header><f-header/></el-header>
         
         <el-container>
-            <el-aside><f-menu/></el-aside>
+            <el-aside width="15%" style="background-color: #FFF;" ><f-menu/></el-aside>
             <el-main>
                 <f-tag-list/>
                 <router-view></router-view>

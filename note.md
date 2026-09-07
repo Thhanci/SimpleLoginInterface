@@ -622,3 +622,343 @@ css  `background-size` 用于控制背景图片的大小。
 4. `::after`（最顶层）
 
 所以 `::after` 默认会在 `::before` **上面**。
+
+
+
+
+
+**`<router-view />` 是“嵌套出口”——在哪里放它，子路由的组件就显示在哪里。**
+
+
+
+```text
+
+第一种<router-view></router-view>在router/index里import， 配置子路由，就可以在页面.vue里显示了
+import {
+    createRouter,
+    createWebHashHistory
+}from 'vue-router'
+
+import Admin from '~/layouts/admin.vue'
+import Index from '~/pages/index.vue'
+import Login from '~/pages/login.vue'
+import NotFound from '~/pages/404.vue'
+import Register from '~/pages/register.vue'
+import Forget from '~/pages/forget.vue'
+import Doll from '~/pages/doll.vue'
+
+const routes = [{
+    path: "/",               // ← 根路径（后台首页）
+    component: Admin,        // ← 先加载布局（admin.vue）
+    children: [{
+        path: "/",             // ← 子路由根路径
+        component: Index,      // ← 再加载首页内容（index.vue）
+        meta: { title: "后台首页" }
+    }]
+},{},{}]
+
+
+
+
+
+
+
+
+
+第二种，引入页面.vue  直接import ,然后,<页面/>就行
+<template>
+    <Fdoll />
+</template>
+
+<script setup>
+import Fdoll from '~/layouts/Fdoll.vue'
+</script>
+
+```
+
+
+
+
+
+
+
+```text
+多个 children 的写法
+
+
+const routes = [{
+  path: "/",
+  component: Admin,
+  children: [
+    {
+      path: "/",
+      component: Index,
+      meta: { title: "后台首页" }
+    },
+    {
+      path: "users",
+      component: Users,
+      meta: { title: "用户管理" }
+    },
+    {
+      path: "goods",
+      component: Goods,
+      meta: { title: "商品管理" }
+    },
+    {
+      path: "orders",
+      component: Orders,
+      meta: { title: "订单管理" }
+    }
+  ]
+}]
+
+
+对应关系表：
+访问 URL       父组件      子组件      页面标题
+/              Admin      Index      后台首页
+/users         Admin      Users      用户管理
+/goods         Admin      Goods      商品管理
+/orders        Admin      Orders     订单管理
+
+
+目录结构：
+src/
+├── layouts/
+│   └── admin.vue
+├── pages/
+│   ├── index.vue
+│   ├── users.vue
+│   ├── goods.vue
+│   └── orders.vue
+└── router/
+    └── index.js
+
+
+admin.vue 中的 router-view：
+<template>
+  <div class="admin-layout">
+    <aside>
+      <router-link to="/">首页</router-link>
+      <router-link to="/users">用户</router-link>
+      <router-link to="/goods">商品</router-link>
+      <router-link to="/orders">订单</router-link>
+    </aside>
+    <main>
+      <router-view />
+    </main>
+  </div>
+</template>
+
+
+完整 router/index.js：
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Admin from '~/layouts/admin.vue'
+import Index from '~/pages/index.vue'
+import Users from '~/pages/users.vue'
+import Goods from '~/pages/goods.vue'
+import Orders from '~/pages/orders.vue'
+
+const routes = [{
+  path: "/",
+  component: Admin,
+  children: [
+    {
+      path: "/",
+      component: Index,
+      meta: { title: "后台首页" }
+    },
+    {
+      path: "users",
+      component: Users,
+      meta: { title: "用户管理" }
+    },
+    {
+      path: "goods",
+      component: Goods,
+      meta: { title: "商品管理" }
+    },
+    {
+      path: "orders",
+      component: Orders,
+      meta: { title: "订单管理" }
+    }
+  ]
+}]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
+})
+
+export default router
+
+
+总结：
+多个 children 的写法：
+children: [
+  { path: "/", component: Index },
+  { path: "users", component: Users },
+  { path: "goods", component: Goods },
+  // ...
+]
+
+每个子路由对应一个页面组件，都在父布局的 <router-view /> 中显示。
+```
+
+
+
+
+
+```text
+Vue 单文件组件中 script 和 style 的区别
+
+
+一、script 的区别
+
+script         → 普通 JS（Options API），使用 export default，不推荐
+script setup   → 组合式 API 语法糖，变量自动暴露，代码更简洁，推荐
+
+
+代码示例：
+// ❌ 普通 script（不推荐）
+<script>
+export default {
+  data() {
+    return { count: 0 }
+  },
+  methods: {
+    increment() { this.count++ }
+  }
+}
+</script>
+
+// ✅ script setup（推荐）
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+const increment = () => count.value++
+</script>
+
+
+二、style 的区别
+
+style          → 全局样式，影响所有页面，谨慎使用
+style scoped   → 只影响当前组件，最常用
+style module   → 当前组件（哈希类名），通过 $style.xxx 访问，类名唯一
+
+
+代码示例：
+// 最常用：scoped
+<style scoped>
+.title { color: red; }
+</style>
+
+// 全局样式
+<style>
+* { margin: 0; }
+</style>
+
+// CSS Modules
+<style module>
+.title { color: red; }
+</style>
+
+
+三、style module 详细说明
+
+CSS Modules 会把类名编译成唯一的哈希值，确保完全隔离。
+
+
+基本用法：
+<template>
+  <div :class="$style.container">
+    <h1 :class="$style.title">Hello Vue</h1>
+  </div>
+</template>
+
+<style module>
+.container { padding: 20px; }
+.title { color: #409EFF; }
+</style>
+
+编译后：
+<div class="_container_1a2b3c">
+  <h1 class="_title_1a2b3c">Hello Vue</h1>
+</div>
+
+
+scoped vs module 对比：
+scoped   → 原理：给元素加 data-v-xxx 属性，类名不变，通过 :deep() 穿透
+module   → 原理：类名变成哈希值，通过 $style.xxx 引用，无法穿透
+
+
+多个类名组合：
+<div :class="[$style.container, $style.active]">多个类</div>
+<div :class="[$style.container, isActive && $style.active]">条件类</div>
+<div :class="{ [$style.container]: true, [$style.active]: isActive }">对象方式</div>
+
+
+自定义名称：
+<style module="myStyle">
+.title { color: red; }
+</style>
+<div :class="myStyle.title">自定义名称</div>
+
+
+全局类名（不哈希）：
+<style module>
+:global(.global-class) { color: red; }
+</style>
+
+
+与 JS 交互：
+<script setup>
+import { useCssModule } from 'vue'
+const style = useCssModule()
+console.log(style.container)
+</script>
+
+
+module 适用场景：
+组件库开发       → 用 module
+大型项目多人协作  → 用 module
+普通业务组件     → 用 scoped（够用且简单）
+需要覆盖子组件样式 → 不要用 module
+
+
+四、对比表
+
+script        → 作用范围：全局 → 是否自动暴露：需要 export → 推荐度：❌ 不推荐
+script setup  → 作用范围：全局 → 是否自动暴露：✅ 自动 → 推荐度：⭐⭐⭐⭐⭐
+style         → 作用范围：全局 → 推荐度：⚠️ 谨慎使用
+style scoped  → 作用范围：当前组件 → 推荐度：⭐⭐⭐⭐⭐
+style module  → 作用范围：当前组件（哈希） → 推荐度：⭐⭐⭐
+
+
+五、实际项目中的组合（最常用）
+<template>
+  <div class="title">{{ msg }}</div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const msg = ref('Hello Vue')
+</script>
+
+<style scoped>
+.title { color: blue; }
+</style>
+
+
+六、总结
+script 区别：
+script       → Options API 写法（旧）
+script setup → 组合式 API 写法（新，推荐）
+
+style 区别：
+style        → 全局样式（影响所有页面）
+style scoped → 只影响当前组件（推荐）
+style module → 生成唯一类名（防冲突）
+```
+
