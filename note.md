@@ -962,3 +962,60 @@ style scoped → 只影响当前组件（推荐）
 style module → 生成唯一类名（防冲突）
 ```
 
+
+
+
+
+```javascript
+       window.open('https://www.bilibili.com/video/BV1FUkcYEEyE/spm_id_from=333.1391.0.0&vd_source=7b46880138058a1e1001ebfdbea0e74a', '_blank')
+
+```
+
+
+
+| /参数值            | 作用                                    | 说明                                                       |
+| :----------------- | :-------------------------------------- | :--------------------------------------------------------- |
+| `'_blank'`         | **在新窗口或新标签页中打开** (默认行为) | 绝大多数现代浏览器会默认在新标签页打开。                   |
+| `'_self'`          | **在当前页面（当前窗口/标签页）中打开** | 相当于直接修改 `window.location.href`。                    |
+| `'_parent'`        | 在父级框架中打开                        | 主要用于 `<iframe>` 或 `<frameset>` 场景。                 |
+| `'_top'`           | 在顶层框架中打开                        | 用于跳出所有嵌套框架，在最顶层窗口加载。                   |
+| `'任意自定义名称'` | 在指定名称的窗口/标签页中打开           | 如果该名称的窗口已存在，则在其内打开；否则会新建一个窗口。 |
+
+| 术语             | 含义                                   | 示例                                     |
+| :--------------- | :------------------------------------- | :--------------------------------------- |
+| **本地静态资源** | 项目文件夹里的图片、视频、CSS、JS 文件 | `/images/b01.jpg`、`src/assets/logo.png` |
+| **本地 API**     | 运行在本地电脑上的后端接口服务         | `http://localhost:3000/api/users`        |
+| **本地服务器**   | 在本地运行的服务（Vite/Node.js）       | `http://localhost:5173`                  |
+
+| 叫法            | 说明                          |
+| :-------------- | :---------------------------- |
+| **后端接口**    | 最通俗的叫法，指后端提供的API |
+| **API 接口**    | 最通用的叫法                  |
+| **RESTful API** | 遵循REST规范的API             |
+| **服务端 API**  | 强调运行在服务器端            |
+| **HTTP API**    | 强调基于HTTP协议              |
+
+```javascript
+// ❌ 原生 JS（代码多）
+document.getElementById('btn').addEventListener('click', function() {
+  document.getElementById('msg').innerHTML = '点击了！'
+  document.getElementById('msg').style.color = 'red'
+})
+
+// ✅ jQuery（代码少）
+$('#btn').click(function() {
+  $('#msg').text('点击了！').css('color', 'red')
+})
+//          ↑ 链式调用，一行搞定
+
+
+
+//jQuery 最著名的特点就是链式调用：
+$('#box')
+  .css('color', 'red')      // 设置颜色
+  .slideDown(300)           // 滑动展开
+  .addClass('active')       // 添加类
+  .html('新内容')           // 修改内容
+// 每个方法都返回 jQuery 对象，可以继续调用
+```
+

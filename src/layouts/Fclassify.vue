@@ -1,4 +1,7 @@
 <template>
+
+    
+
   <div class="video-page">
     <div class="video-grid">
       <div 
@@ -29,9 +32,10 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 const videoList = reactive([
   {
@@ -39,7 +43,7 @@ const videoList = reactive([
     title: '【中日字幕/ED完整版】ナナヲアカリ「明日の私に幸あれ」【虽然是公会的前台小姐，因为讨厌加班，所以打算自己讨伐BOSS ED】',
     author: '百億_光年',
     views: '12.3万',
-    cover: 'https://picsum.photos/seed/video1/320/180',
+    cover: '/images/b01.jpg',
     duration: '04:32',
     date: '2024-12-18'
   },
@@ -48,7 +52,7 @@ const videoList = reactive([
     title: '【中日字幕/OP完整版】虽然是公会前台小姐但讨厌加班所以自己讨伐 OP「パーフェクトデイ」/ 310',
     author: '百億_光年',
     views: '8.7万',
-    cover: 'https://picsum.photos/seed/video2/320/180',
+    cover: '/images/b02.jpg',
     duration: '03:45',
     date: '2025-01-10'
   },
@@ -57,7 +61,7 @@ const videoList = reactive([
     title: '【OP/ED】虽然是公会的前台小姐，因为不想加班，所以单挑BOSS',
     author: 'crayonxx_',
     views: '5.2万',
-    cover: 'https://picsum.photos/seed/video3/320/180',
+    cover: '/images/b03.jpg',
     duration: '05:10',
     date: '2025-01-11'
   },
@@ -66,7 +70,7 @@ const videoList = reactive([
     title: '【中文字幕】Heiliges Requiem（神圣安魂曲）/ NEUN Episode 1',
     author: '钢板人锅包肉',
     views: '3.8万',
-    cover: 'https://picsum.photos/seed/video4/320/180',
+    cover: '/images/b04.jpg',
     duration: '06:20',
     date: '2024-09-09'
   },
@@ -75,7 +79,7 @@ const videoList = reactive([
     title: '《铠甲勇士》全部战歌全球数据排名，每一首都是当年的战力 BGM。【铠甲勇士官方二创大赛】',
     author: '沉默的高阳公主',
     views: '2.1万',
-    cover: 'https://picsum.photos/seed/video5/320/180',
+    cover: '/images/b05.jpg',
     duration: '08:15',
     date: '2025-08-12'
   },
@@ -84,7 +88,7 @@ const videoList = reactive([
     title: 'Empty old City - 青羅れるフィリア (feat. DAZBE)',
     author: 'Empty_old_City',
     views: '1.5万',
-    cover: 'https://picsum.photos/seed/video6/320/180',
+    cover: '/images/b06.jpg',
     duration: '04:50',
     date: '2025-08-20'
   },
@@ -93,7 +97,7 @@ const videoList = reactive([
     title: '【斯卡布罗集市｜末日三问】百万级录音棚听《Scarborough Fair》TV动画《末日三问》OST【Hi-Res】',
     author: 'JLRs-jayfm',
     views: '9.6万',
-    cover: 'https://picsum.photos/seed/video7/320/180',
+    cover: '/images/b07.jpg',
     duration: '05:28',
     date: '2023-07-05'
   },
@@ -102,7 +106,7 @@ const videoList = reactive([
     title: '【幻影绽放于幽梦之间】低语回响在午夜边缘 | Phantom Bloom',
     author: '猫可乐Sama',
     views: '6.3万',
-    cover: 'https://picsum.photos/seed/video8/320/180',
+    cover: '/images/b08.jpg',
     duration: '04:12',
     date: '2025-05-11'
   },
@@ -111,7 +115,7 @@ const videoList = reactive([
     title: '欧布奥特曼原生之初主题曲《True Fighter》原版',
     author: '大古音乐',
     views: '4.7万',
-    cover: 'https://picsum.photos/seed/video9/320/180',
+    cover: '/images/b09.jpg',
     duration: '03:58',
     date: '2022-02-24'
   },
@@ -120,14 +124,48 @@ const videoList = reactive([
     title: '百万级录音棚听《假面骑士：超越世代》主题曲「Promise」',
     author: 'JLRs-jayfm',
     views: '3.2万',
-    cover: 'https://picsum.photos/seed/video10/320/180',
+    cover: '/images/b10.jpg',
     duration: '04:45',
     date: '2025-05-10'
   }
 ])
 
 const goToVideo = (id) => {
-  router.push(`/video/${id}`)
+//   router.push(`/video/${id}`)
+    switch(id){
+        case 1:
+            // window.location.href = 'https://www.bilibili.com/video/BV1FUkcYEEyE/?spm_id_from=333.1391.0.0&vd_source=7b46880138058a1e1001ebfdbea0e74a'
+            window.open('https://www.bilibili.com/video/BV1FUkcYEEyE', '_blank')
+            // console.log(route.path)
+            break
+        case 2:
+            window.open('https://www.bilibili.com/video/BV1XxcnezECT', '_blank')
+            break
+        case 3:
+            window.open('https://www.bilibili.com/video/BV1GdcxesEGp', '_blank')
+            break
+        case 4:
+            window.open('https://www.bilibili.com/video/BV1XjpEeWEss', '_blank')
+            break
+        case 5:
+            window.open('https://www.bilibili.com/video/BV1Qquz6XEWC', '_blank')
+            break
+        case 6:
+            window.open('https://www.bilibili.com/video/BV1xJbZ62EoW', '_blank')
+            break
+        case 7:
+            window.open('https://www.bilibili.com/video/BV15W4y1f7VT', '_blank')
+            break
+        case 8:
+            window.open('https://www.bilibili.com/video/BV1ih5b61E24', '_blank')
+            break
+        case 9:
+            window.open('https://www.bilibili.com/video/BV1HS4y1k71L', '_blank')
+            break
+        case 10:
+            window.open('https://www.bilibili.com/video/BV1xsVdzDEJ1', '_blank')
+            break
+    }
 }
 </script>
 
