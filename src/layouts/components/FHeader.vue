@@ -19,6 +19,12 @@
             </el-icon>
         </el-tooltip>
 
+        <el-tooltip effect="dark" content="doll" placement="bottom">
+            <el-icon class="icon-btn" @click="handleDoll">
+                <Avatar />
+            </el-icon>
+        </el-tooltip>
+
         <div class="ml-auto flex items-center"> <!-- style="margin: auto;" -->
 
             <el-tooltip effect="dark" content="全屏" placement="bottom">
@@ -30,12 +36,13 @@
 
             <el-dropdown class="dropdown" @command="handleCommand">
                 <span class="flex items-center text-light-50">
-                <el-avatar class="mr-2" :size="25" :src="avatarImg" />
-                    {{ $store.state.user.username }}
-                    <el-icon class="el-icon--right">
-                        <arrow-down />
-                    </el-icon>
+                    <el-avatar class="mr-2" :size="25" :src="avatarImg" />
+                        {{ $store.state.user.username }}
+                        <el-icon class="el-icon--right">
+                            <arrow-down />
+                        </el-icon>
                 </span>
+
                 <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item command="rePassword">修改密码</el-dropdown-item>
@@ -91,6 +98,8 @@ import { showModal, toast } from '~/composables/util';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { useFullscreen } from '@vueuse/core'
+
+// import doll from '~/pages/doll.vue'
 
 const {
     //是否全屏状态
@@ -176,7 +185,7 @@ const handleCommand = (c) => {
             break;
         case "rePassword":
             // console.log("修改密码")
-            showDrawer.value = true
+            showDrawer.value = true // ← 这里！点击"修改密码" → 打开弹窗
             break;
     }
 }
@@ -203,6 +212,10 @@ function handleLogout() {
     )
 }
 
+
+const handleDoll = () => {
+    router.push("/doll")
+}
 
 
 

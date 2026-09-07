@@ -8,6 +8,9 @@ import Admin from '~/layouts/admin.vue'
 import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue'
 import NotFound from '~/pages/404.vue'
+import Register from '~/pages/register.vue'
+import Forget from '~/pages/forget.vue'
+import Doll from '~/pages/doll.vue'
 
 const routes = [{
     path: "/",               // ← 根路径（后台首页）
@@ -22,6 +25,26 @@ const routes = [{
     component:Login,
     meta:{  //预定义属性
         title:"登录页"  //自定义属性
+    }
+},{
+    path:"/register",
+    component:Register,
+    meta:{  //预定义属性
+        title:"注册页",  //自定义属性
+        requireFrom:"/login"  //自定义属性
+    }
+},{
+    path:"/forget",
+    component:Forget,
+    meta:{  //预定义属性
+        title:"找回密码",  //自定义属性
+        requireFrom:"/login"  //自定义属性
+    }
+},{
+    path:"/doll",
+    component:Doll,
+    meta:{  //预定义属性
+        title:"doll",  //自定义属性
     }
 },{ 
     path: '/:pathMatch(.*)*', 

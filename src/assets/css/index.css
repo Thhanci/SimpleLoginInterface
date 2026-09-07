@@ -43,7 +43,7 @@ html::before {
 
 .login-box .box {
     display: flex;
-    overflow: hidden;
+    overflow: auto;
     width: 90vw;
     max-width: 1200px;
     height: 80vh;
@@ -98,7 +98,7 @@ html::before {
 .login-box .box .right h4 {
     color: rgb(144, 129, 241);
     font-size: 3rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 }
 
 .login-box .box .right form {
@@ -141,7 +141,7 @@ html::before {
     border-radius: 0.5rem;
     margin: 2rem auto 0;
     cursor: pointer;
-    transform: translateX(-20%);
+    transform: translateX(-15%);
 }
 
 .login-box .box .right .submit .button {
@@ -159,13 +159,14 @@ html::before {
 .login-box .box .right .fn {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 0rem;
     width: 70%;
+    transform: translateX(-15%);
 }
 
 .login-box .box .right .fn button {
     font-size: 1.3rem;
-    margin-top: 5rem;
+    margin-top: 3rem;
     padding: 1rem 2rem;
     color: #666;
 }

@@ -17,6 +17,8 @@ npm init vite@latest shop-admin --template vue
 cd shop-admin
 npm install
 npm run dev
+
+npm install three
 ```
 
 
@@ -611,3 +613,12 @@ css  `background-size` 用于控制背景图片的大小。
 | **显示滚动条** | `overflow: auto;`            | 超出的部分通过滚动查看 |
 | **允许溢出**   | `overflow: visible;`（默认） | 内容直接显示在外面     |
 | **文字换行**   | `word-wrap: break-word;`     | 文字自动换行           |
+
+默认情况下，堆叠顺序是：
+
+1. 元素背景（最底层）
+2. `::before`
+3. 元素内容
+4. `::after`（最顶层）
+
+所以 `::after` 默认会在 `::before` **上面**。
