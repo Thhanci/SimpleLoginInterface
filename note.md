@@ -1040,3 +1040,181 @@ arr.filter((item) => {
 // 结果：[3, 4, 5]
 ```
 
+
+
+
+
+
+
+| 操作   | **数据操作（CRUD）** | **数据库/表结构操作（DDL）** |
+| :----- | :------------------- | :--------------------------- |
+| **增** | `INSERT`（插入数据） | `CREATE`（创建数据库/表）    |
+| **删** | `DELETE`（删除数据） | `DROP`（删除数据库/表）      |
+| **改** | `UPDATE`（修改数据） | `ALTER`（修改表结构）        |
+| **查** | `SELECT`（查询数据） | `SHOW / DESC`（查看结构）    |
+
+
+
+
+
+
+
+```text
+// 1. interface 定义结构
+interface ApiResponse<T> {
+    code: number;
+    data: T;
+    message: string;
+}
+
+// 2. 使用 infer 提取 ApiResponse 中的 T
+type ExtractData<T> = T extends ApiResponse<infer U> ? U : never;
+
+// 3. 实际使用
+const response: ApiResponse<string[]> = {
+    code: 200,
+    data: ['a', 'b', 'c'],
+    message: 'success'
+};
+
+type UserData = ExtractData<typeof response>;  // string[]
+```
+
+
+
+```typescript
+为什么需要 computed？直接算不行吗？
+
+
+直接算当然可以，但 computed 解决了两个核心问题：缓存和响应式。
+
+
+一、先看一个直接计算的例子
+
+let a = 1;
+a = a * a * 2 + 2;
+console.log(a);  // 4
+
+这是普通 JavaScript，没有任何问题。
+但如果你在 Vue 中想根据 a 的变化自动更新页面，直接算就不行了。
+
+
+二、问题：Vue 需要知道"什么时候重新计算"
+
+const price = ref(10)
+const quantity = ref(3)
+
+// ❌ 普通变量：只算一次，price 或 quantity 变化后不会更新
+let total = price.value * quantity.value
+
+price.value = 20
+console.log(total)  // 还是 30（没更新！）
+
+// ❌ 模板里直接写表达式：每次渲染都重新计算
+<template>
+    <p>{{ price * quantity }}</p>
+</template>
+
+
+三、computed 解决了什么？
+
+const price = ref(10)
+const quantity = ref(3)
+
+// ✅ computed：price 或 quantity 变化时，total 自动更新
+const total = computed(() => price.value * quantity.value)
+
+price.value = 20
+console.log(total.value)  // 60（自动更新了！）
+
+
+四、computed 的两大优势
+
+1. 缓存（最重要）
+
+// ❌ 普通函数：每次调用都重新计算
+function getTotal() {
+    console.log('计算了')
+    return price.value * quantity.value
+}
+
+getTotal()  // 计算了
+getTotal()  // 计算了
+getTotal()  // 计算了
+
+// ✅ computed：只在依赖变化时重新计算
+const total = computed(() => {
+    console.log('计算了')
+    return price.value * quantity.value
+})
+
+console.log(total.value)  // 计算了
+console.log(total.value)  // 不打印，用缓存
+console.log(total.value)  // 不打印，用缓存
+
+
+2. 响应式
+
+// ✅ computed 自动追踪依赖
+const total = computed(() => price.value * quantity.value)
+
+// price 变化 → total 自动更新 → 页面自动更新
+price.value = 100
+
+
+五、什么时候用 computed，什么时候直接算？
+
+简单计算，不涉及 Vue 数据       → 直接算（不需要响应式）
+依赖 Vue 的 ref/reactive 数据    → computed（需要自动更新）
+计算逻辑复杂，模板里写不下       → computed（提高可读性）
+同一个计算结果多处使用           → computed（有缓存，性能好）
+需要执行副作用（如发请求）       → watch（computed 不适合）
+
+
+六、完整对比示例
+
+const price = ref(10)
+const quantity = ref(3)
+
+// 方式 1：直接算（只算一次）
+let total1 = price.value * quantity.value
+// 问题：price 变了，total1 不变
+
+// 方式 2：普通函数（每次调用都算）
+function getTotal2() {
+    return price.value * quantity.value
+}
+// 问题：没有缓存，性能差
+
+// 方式 3：computed（推荐 ✅）
+const total3 = computed(() => price.value * quantity.value)
+// 优势：有缓存，自动更新
+
+<template>
+    <p>{{ total1 }}</p>        // 不会更新 ❌
+    <p>{{ getTotal2() }}</p>   // 每次渲染都重新计算 ⚠️
+    <p>{{ total3 }}</p>        // 自动更新 + 缓存 ✅
+</template>
+
+
+七、总结
+
+直接算：适合普通 JS，不涉及 Vue 响应式
+computed：适合 Vue 中根据响应式数据计算新值
+
+为什么不用直接算？
+1. Vue 需要知道什么时候重新计算
+2. 模板里写复杂表达式可读性差
+3. 普通函数没有缓存，性能差
+
+computed 的优势：
+✅ 自动追踪依赖
+✅ 依赖变化时自动更新
+✅ 有缓存，性能好
+✅ 模板更简洁
+```
+
+
+
+
+
